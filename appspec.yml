@@ -2,12 +2,12 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/html/secretlab
+    destination: /var/www/secretlab
 file_exists_behavior: OVERWRITE
 permissions:
- - object: /var/www/html/secretlab
-   owner: ec2-user
-   group: ec2-user
+  - object: /var/www/secretlab
+    owner: ec2-user
+    group: ec2-user
 hooks:
   AfterInstall:
     - location: scripts/change_ownership.sh

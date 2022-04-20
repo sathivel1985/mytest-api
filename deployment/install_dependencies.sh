@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /var/www/html/secretlab/
+cd /var/www/secretlab/
 composer install

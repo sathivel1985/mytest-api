@@ -1,6 +1,6 @@
 #!/bin/bash
-php /var/www/html/secretlab/artisan migrate --force
-php /var/www/html/secretlab/artisan config:cache
-php /var/www/html/secretlab/artisan config:clear
-cd /var/www/html/secretlab
+php /var/www/secretlab/artisan migrate --force
+php /var/www/secretlab/artisan config:cache
+php /var/www/secretlab/artisan config:clear
+cd /var/www/secretlab
 ./vendor/bin/phpunit
