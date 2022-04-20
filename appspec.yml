@@ -19,6 +19,6 @@ hooks:
     - location: deployment/deploy.sh
       timeout: 300
       runas: ec2-user
-    - location: deployment/folder_permissions.sh
+    - location: deployment/folder_permission.sh
       timeout: 300
       runas: ec2-user
