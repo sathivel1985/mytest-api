@@ -10,15 +10,15 @@ permissions:
     group: ec2-user
 hooks:
   AfterInstall:
-    - location: scripts/change_ownership.sh
+    - location: deployment/change_ownership.sh
       timeout: 300
       runas: ec2-user
-    - location: scripts/install_dependencies.sh
+    - location: deployment/install_dependencies.sh
       timeout: 300
       runas: ec2-user
-    - location: scripts/deploy.sh
+    - location: deployment/deploy.sh
       timeout: 300
       runas: ec2-user
-    - location: scripts/folder_permissions.sh
+    - location: deployment/folder_permissions.sh
       timeout: 300
       runas: ec2-user
