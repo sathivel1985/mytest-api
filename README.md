@@ -1,5 +1,5 @@
 <h2>Tech stack</h2><br/>
-Laravel 8<br/>
+Laravel 9<br/>
 PHP 8.0 and Above<br/>
 MySQL<br/>
 Apache<br/><br/>
