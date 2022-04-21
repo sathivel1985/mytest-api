@@ -1,27 +1,30 @@
-Tech stack
-Laravel 8
-PHP 8.0 and Above
-MySQL
-Apache
-Install
-clone the repo
-save as .env.example as .env
-update the required configuration for .env file
-cd to the project directory
-execute composer install
-execute php artisan key:generate
-execute php artisan migrate
+<h2>Tech stack</h2><br/>
+Laravel 8<br/>
+PHP 8.0 and Above<br/>
+MySQL<br/>
+Apache<br/><br/>
+<h2>Setup</h2><br/>
+clone the repo<br/>
+save as .env.example as .env<br/>
+update the required configuration for .env file<br/>
+cd to the project directory<br/>
+execute composer install<br/>
+execute php artisan key:generate<br/>
+execute php artisan migrate<br/><br/>
 
-api/object { "keName": "value"}
-Get object - GET method
+<h2>API Usage</h2><br>
+<b>Create Key Value  </b><br>
+<ul>
+<li>{host}/api/object { "keyName": "value"} <br/>   Method : POST </li>
+</ul><br/>
+<b>Get Laest Key Value  </b><br>
 
-api/object/{keyName}
-Get object with timestamp - GET method
+<ul><li>{host}/api/object/{keyName} <br/>   Method : GET   </li> </ul><br> 
+<b>Get object with timestamp  </b><br> 
+<ul><li>{host}api/object/{keyName}?timestamp={unixTimestamp}<br>Method : GET   </li> </ul><br>
 
-api/object/{keyName}?timestamp={unixTimestamp}
-Get all records - GET method
+<b>Get all records - GET method</b><br>
 
-api/object/get_all_records
-
-Feature test
-Use terminal and go to project directory Execute the below command php artisan test --testsuite=Feature
+<ul><li>{host}api/object/get_all_records <br>Method : GET   </li> </ul><br>
+<h2>Testing</h2> <br/>
+php artisan test --testsuite=Feature
