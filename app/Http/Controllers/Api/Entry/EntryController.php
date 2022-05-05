@@ -7,6 +7,8 @@ use App\Http\Requests\EntryRequest;
 use App\Http\Resources\EntryResource;
 use App\Models\Entry;
 use App\Repository\EntryRepository;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Cache;
 
 class EntryController extends Controller
 {
@@ -26,7 +28,9 @@ class EntryController extends Controller
      */
     public function index()
     {
-        return $this->entryRepository->getAll();
+        return Cache::remember('get-all-records', 5000, function () {
+            return $this->entryRepository->getAll();
+        });
     }
 
     /**

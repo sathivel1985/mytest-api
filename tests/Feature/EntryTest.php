@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Entry;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -49,7 +50,8 @@ class EntryTest extends TestCase
      */
     public function test_retrieve_data_throw_error_if_given_key_is_not_found()
     {
-        $response = $this->get('api/object/wrongkey');
+        $response = $this->get('api/object/12312312312121', ['X-API-VALUE' => '12345']);
+
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -96,18 +98,18 @@ class EntryTest extends TestCase
 
     public function test_retrieve_latest_value_for_existing_key()
     {
-        $this->postJson('api/object', ["keyname" => "value one"]);
+        $this->postJson('api/object', ["test" => "value one"]);
         sleep(1);
-        $this->postJson('api/object', ["keyname" => "value two"]);
+        $this->postJson('api/object', ["test" => "value two"]);
         sleep(1);
-        $this->postJson('api/object', ["keyname" => "value three"]);
-        $response = $this->get('api/object/keyname');
+        $this->postJson('api/object', ["test" => "value three"]);
+        $response = $this->get('api/object/test', ['X-API-VALUE' => '12345']);
 
         $response
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    "key" => "keyname",
+                    "key" => "test",
                     "value" => "value three"
                 ]
             ]);
@@ -119,14 +121,16 @@ class EntryTest extends TestCase
      */
     public function test_retrieve_data_for_existing_key_for_given_timestamp()
     {
-        $entry = Entry::factory()->create();
-        $response = $this->get('api/object/' . $entry->name . '?timestamp=' . $entry->updated_at);
+        $time = Carbon::now()->timestamp;
+        $entry = Entry::create(['name' => 'mykey', 'value' => 'myvalue', 'updated_at' => $time]);
+        $response = $this->get('api/object/mykey?timestamp=' .  $time, ['X-API-VALUE' => '12345']);
         $response
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
                     'key' => $entry->name,
-                    'value' => $entry->value
+                    'value' => $entry->value,
+                    'updated_at' => $entry->updated_at
                 ]
             ]);
     }
@@ -140,7 +144,7 @@ class EntryTest extends TestCase
     {
         $entry = Entry::factory()->create();
         sleep(1);
-        $response = $this->get('api/object/' . $entry->name . '?timestamp=' . time());
+        $response = $this->get('api/object/' . $entry->name . '?timestamp=' . time(), ['X-API-VALUE' => '12345']);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -156,7 +160,27 @@ class EntryTest extends TestCase
 
     public function test_get_all_entries()
     {
-        $response = $this->get('api/object/get_all_records');
+        $response = $this->get('api/object/get_all_records', ['X-API-VALUE' => '12345']);
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'key',
+                    'value',
+                    'updated_at'
+                ]
+            ]
+        ]);;
+    }
+
+    /**
+     * Testing for display all  entries
+     */
+
+    public function test_cache_entries()
+    {
+        $response = $this->get('api/object/get_all_records', ['X-API-VALUE' => '12345']);
+
         $response->assertStatus(200)->assertJsonStructure([
             'data' => [
                 '*' => [

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Entry\EntryController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::prefix('object')->group(function () {
     Route::post('/', [EntryController::class, 'store'])->name('create-entry-object');
-    Route::get('/get_all_records', [EntryController::class, 'index'])->name('get-all-entry-objects');
-    Route::get('/{name}', [EntryController::class, 'show'])->name('get-entry');
+    Route::middleware('header')->group(function () {
+        Route::get('/get_all_records', [EntryController::class, 'index'])->name('get-all-entry-objects');
+        Route::get('/{name}', [EntryController::class, 'show'])->name('get-entry');
+    });
 });
